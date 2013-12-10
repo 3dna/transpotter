@@ -1,6 +1,20 @@
 = transpotter
 
-Description goes here.
+```bash
+$ gem install transpotter
+```
+
+= How to
+
+```ruby
+transpotter = Transpotter.new('path/to/file')
+
+# Determine the encoding
+encoding = transpotter.detect
+
+# Transcode the file
+transpotter.output_to('path/to/new_file')
+```
 
 == Contributing to transpotter
  
