@@ -5,7 +5,9 @@ require 'tempfile'
 describe Transpotter do
   shared_examples 'a transpotter' do
     let(:file) { Tempfile.new('transpotter') }
-    let(:encoded_data) { data.encode(encoding, replace: '') }
+    let(:encoded_data) do
+      data.encode(encoding, replace: '')
+    end
 
     before do
       File.open(file.path, 'w') do |io|

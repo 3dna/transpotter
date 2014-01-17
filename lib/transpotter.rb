@@ -68,7 +68,7 @@ class Transpotter
   private
 
   def line_endings
-    @line_endings = case sample
+    @line_endings = case convert(sample)
                     when /\r\n/ then "\r\n"
                     when /\n/ then "\n"
                     when /\r/ then "\r"
