@@ -1,29 +1,56 @@
+# encoding: utf-8
 require 'spec_helper'
 require 'tempfile'
 
 describe Transpotter do
-  {
-    File.join(FIXTURE_ROOT, 'iso-8859-1-french.txt')  => 'ISO-8859-1',
-    File.join(FIXTURE_ROOT, 'iso-8859-1-german.txt')  => 'ISO-8859-1',
-    File.join(FIXTURE_ROOT, 'big5.txt')               => 'Big5',
-    File.join(FIXTURE_ROOT, 'sjis.txt')               => 'SJIS',
-  }.each do |file, encoding|
-    context encoding do
-      let(:spotter) { Transpotter.new(file) }
-      let(:tempfile) { Tempfile.new('transpotter') }
+  shared_examples 'a transpotter' do
+    let(:file) { Tempfile.new('transpotter') }
+    let(:encoded_data) { data.encode(encoding, replace: '') }
 
-      it 'should detect the correct encoding' do
-        spotter.detect!
+    before do
+      File.open(file.path, 'w') do |io|
+        io.write encoded_data
+      end
+    end
+
+    context 'file' do
+      let(:spotter) { Transpotter.new(file.path) }
+
+      it 'can detect the encoding of a file' do
         spotter.encoding.should eq encoding
       end
 
-      it 'can write a new utf8 file' do
-        spotter.output_to(tempfile.path)
-        File.readlines(tempfile.path).count.should eq File.readlines(file).count
-        File.read(tempfile.path).should be_valid_encoding
-        File.read(tempfile.path).encoding.should eq Encoding.find('UTF-8')
-        puts File.read(tempfile.path)
+      it 'can see every line' do
+        spotter.each_line { |line| line.encoding.name.should eq 'UTF-8' }
       end
+    end
+
+    context 'data' do
+      let(:spotter) { Transpotter.new(nil, encoded_data) }
+
+      it 'can detect the encoding of a file' do
+        spotter.encoding.should eq encoding
+      end
+
+      it 'can see every line' do
+        spotter.each_line { |line| line.encoding.name.should eq 'UTF-8' }
+      end
+    end
+  end
+
+  %w{
+    UTF-8
+    ISO-8859-1
+    Big5
+    Shift_JIS
+  }.each do |encoding|
+    context encoding do
+      let(:data) do
+        "圖形碼helloｗ ｘ ｙ ｚ白いÇ  Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ中文數位化技術推廣委員會"
+      end
+      let(:encoding) { encoding }
+
+      it_behaves_like 'a transpotter'
     end
   end
 end
