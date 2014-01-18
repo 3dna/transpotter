@@ -85,7 +85,7 @@ class Transpotter
   end
 
   def sample
-    @sample ||= File.read(@filename, @sample_size) if @filename
+    @sample ||= File.read(@filename, @samplesize) if @filename
     @sample ||= @data
   end
 
