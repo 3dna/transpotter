@@ -3,7 +3,7 @@ require 'charlock_holmes/string'
 class Transpotter
   attr_reader :filename
 
-  DEFAULT_SAMPLE_SIZE = 1024 * 1024 * 500 # 500 MB
+  DEFAULT_SAMPLE_SIZE = 1024 * 1024 # 1 MB
 
   # Determined from here:
   # http://w3techs.com/technologies/overview/character_encoding/all
