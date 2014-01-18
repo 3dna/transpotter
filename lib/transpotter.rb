@@ -101,8 +101,7 @@ class Transpotter
   end
 
   def valid_encoding?(encoding)
-    test_data = sample.force_encoding(encoding.name)
-    test_data.force_encoding(encoding.name).encode('UTF-8').valid_encoding?
+    sample.force_encoding(encoding.name).encode('UTF-8').valid_encoding?
   rescue *ENCODING_ERRORS
     return false
   end
