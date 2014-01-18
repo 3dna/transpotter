@@ -78,7 +78,7 @@ class Transpotter
   def convert(string)
     return string if encoding == 'UTF-8'
     @converter ||= Encoding::Converter.new(encoding, 'UTF-8')
-    @converter.convert(string)
+    @converter.convert(string.force_encoding(encoding))
   end
 
   def sample
