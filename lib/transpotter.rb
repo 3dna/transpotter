@@ -48,16 +48,20 @@ class Transpotter
   def read
     enc = Encoding.find(encoding)
     if @filename
-      convert(File.read(@filename, external_encoding: enc))
+      data = File.read(@filename,
+                       external_encoding: encoding,
+                       internal_encoding: encoding)
+      convert(data)
     elsif @data
       convert(@data)
     end
   end
 
   def each_line
-    enc = Encoding.find(encoding)
     if @filename
-      File.open(@filename, external_encoding: enc) do |io|
+      File.open(@filename,
+                external_encoding: encoding,
+                internal_encoding: encoding) do |io|
         io.each(line_endings) { |line| yield convert(line) }
       end
     elsif @data
@@ -77,8 +81,7 @@ class Transpotter
 
   def convert(string)
     return string if encoding == 'UTF-8'
-    @converter ||= Encoding::Converter.new(encoding, 'UTF-8')
-    @converter.convert(string.force_encoding(encoding))
+    string.force_encoding(encoding).encode('UTF-8')
   end
 
   def sample
@@ -99,8 +102,7 @@ class Transpotter
 
   def valid_encoding?(encoding)
     test_data = sample.force_encoding(encoding.name)
-    converter = Encoding::Converter.new(encoding.name, 'UTF-8')
-    return converter.convert(test_data).valid_encoding?
+    string.force_encoding(encoding.name).encode('UTF-8').valid_encoding?
   rescue *ENCODING_ERRORS
     return false
   end
