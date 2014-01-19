@@ -46,7 +46,7 @@ class Transpotter
   end
 
   def read
-    enc = Encoding.find(encoding)
+    return unless sample # don't do anything if we can't grab sample
     if @filename
       data = File.read(@filename,
                        external_encoding: encoding,
@@ -58,6 +58,7 @@ class Transpotter
   end
 
   def each_line
+    return unless sample # don't do anything if we can't grab sample
     if @filename
       File.open(@filename,
                 external_encoding: encoding,
@@ -85,7 +86,7 @@ class Transpotter
   end
 
   def sample
-    @sample ||= File.read(@filename, @samplesize) if @filename
+    @sample ||= File.read(@filename, @samplesize) if File.file?(@filename.to_s)
     @sample ||= @data
   end
 

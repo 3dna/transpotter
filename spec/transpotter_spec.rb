@@ -56,12 +56,28 @@ describe Transpotter do
     end
   end
 
-  it 'will not break if nil is given' do
-    spotter = Transpotter.new(nil, nil)
-    spotter.each_line { fail 'should not be called' }
+  context 'nil input' do
+    it 'will not break if nil is given' do
+      spotter = Transpotter.new(nil, nil)
+      spotter.each_line { fail 'should not be called' }
+    end
+
+    it 'will return no encoding if no data is given' do
+      Transpotter.new(nil, nil).encoding.should be_nil
+    end
   end
 
-  it 'will return no encoding if no data is given' do
-    Transpotter.new(nil, nil).encoding.should be_nil
+  context 'bad file' do
+    it 'will return nothing if an invalid file is provided' do
+      Transpotter.new('path/to/no/where').each_line { fail }
+    end
+
+    it 'will return no encoding if an invalid file is provided' do
+      Transpotter.new('path/to/no/where').encoding.should be_nil
+    end
+
+    it 'will return nothing if an invalid file is provided' do
+      Transpotter.new('/dev/null').encoding.should be_nil
+    end
   end
 end
