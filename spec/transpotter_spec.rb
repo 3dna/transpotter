@@ -55,4 +55,13 @@ describe Transpotter do
       it_behaves_like 'a transpotter'
     end
   end
+
+  it 'will not break if nil is given' do
+    spotter = Transpotter.new(nil, nil)
+    spotter.each_line { fail 'should not be called' }
+  end
+
+  it 'will return no encoding if no data is given' do
+    Transpotter.new(nil, nil).encoding.should be_nil
+  end
 end

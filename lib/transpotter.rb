@@ -90,10 +90,11 @@ class Transpotter
   end
 
   def charlock
-    sample.detect_encoding[:encoding]
+    sample.detect_encoding[:encoding] if sample
   end
 
   def brute_force
+    return nil if sample.nil?
     MOST_COMMON_ENCODINGS.each do |encoding|
       return encoding.name if valid_encoding?(encoding)
     end
