@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["Kevin Bacha"]
   s.date = "2015-01-08"
-  s.description = "Utility to transcode files and strings"
+  s.description = "TODO: longer description of your gem"
   s.email = "bacha@nationbuilder.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
