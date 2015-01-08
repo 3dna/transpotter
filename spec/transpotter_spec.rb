@@ -48,7 +48,7 @@ describe Transpotter do
   }.each do |encoding|
     context encoding do
       let(:data) do
-        "圖形碼helloｗ ｘ ｙ ｚ白いÇ  Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ中文數位化技術推廣委員會"
+        "圖形碼helloｗ ｘ ｙ ｚ白いÇ  Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ中文數位化技術推廣委員會" * 1025
       end
       let(:encoding) { encoding }
 

@@ -91,7 +91,10 @@ class Transpotter
   end
 
   def charlock
-    sample.detect_encoding[:encoding] if sample
+    if sample
+      encoding = sample.detect_encoding
+      encoding[:encoding] if encoding[:confidence] > 75
+    end
   end
 
   def brute_force
