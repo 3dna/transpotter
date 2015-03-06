@@ -49,6 +49,7 @@ class Transpotter
     return unless sample # don't do anything if we can't grab sample
     if @filename
       data = File.read(@filename,
+                       'rb',
                        external_encoding: encoding,
                        internal_encoding: encoding)
       convert(data)
