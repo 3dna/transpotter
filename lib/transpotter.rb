@@ -48,11 +48,9 @@ class Transpotter
   def read
     return unless sample # don't do anything if we can't grab sample
     if @filename
-      data = File.read(@filename,
-                       'rb',
-                       external_encoding: encoding,
-                       internal_encoding: encoding)
-      convert(data)
+      open_encoded_file do |io|
+        return convert(io.read)
+      end
     elsif @data
       convert(@data)
     end
@@ -61,9 +59,7 @@ class Transpotter
   def each_line
     return unless sample # don't do anything if we can't grab sample
     if @filename
-      File.open(@filename,
-                external_encoding: encoding,
-                internal_encoding: encoding) do |io|
+      open_encoded_file do |io|
         io.each(line_endings) { |line| yield convert(line) }
       end
     elsif @data
@@ -72,6 +68,15 @@ class Transpotter
   end
 
   private
+
+  def open_encoded_file
+    File.open(@filename,
+              'rb',
+              external_encoding: encoding,
+              internal_encoding: encoding) do |io|
+      yield io
+    end
+  end
 
   def line_endings
     @line_endings = case convert(sample)

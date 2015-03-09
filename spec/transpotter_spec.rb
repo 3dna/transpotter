@@ -25,6 +25,10 @@ describe Transpotter do
       it 'can see every line' do
         spotter.each_line { |line| line.encoding.name.should eq 'UTF-8' }
       end
+
+      it 'can read the whole document' do
+        expect(spotter.read.encoding.name).to eq 'UTF-8'
+      end
     end
 
     context 'data' do
