@@ -60,7 +60,7 @@ class Transpotter
     return unless sample # don't do anything if we can't grab sample
     if @filename
       open_encoded_file do |io|
-        io.each(line_endings) { |line| yield convert(line) }
+        io.each(line_endings.encode(@encoding)) { |line| yield convert(line) }
       end
     elsif @data
       convert(@data).split(line_endings).each { |line| yield line }
@@ -83,6 +83,7 @@ class Transpotter
                     when /\r\n/ then "\r\n"
                     when /\n/ then "\n"
                     when /\r/ then "\r"
+                    else "\n"
                     end
   end
 
