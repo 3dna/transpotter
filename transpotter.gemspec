@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.authors = ["Kevin Bacha"]
   s.date = "2015-05-29"
-  s.description = "TODO: longer description of your gem"
+  s.description = "Gem to handle transcoding in ruby"
   s.email = "bacha@nationbuilder.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/kbacha/transpotter"
   s.licenses = ["MIT"]
   s.rubygems_version = "2.4.3"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "Gem to handle transcoding in ruby"
 
   if s.respond_to? :specification_version then
     s.specification_version = 4
